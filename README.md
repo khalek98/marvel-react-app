@@ -1,6 +1,6 @@
 # marvel-react-app
 
-[**Link to deployed app**](https://khalek-marvel-react-app.netlify.app) <br/>
+[**Link to deployed app**](https://marvel-react-app-seven.vercel.app/) <br/>
 
 ---
 
