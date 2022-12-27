@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-import Spinner from '../spinner/Spinner';
-import ErrorMessage from '../errorMessage/ErrorMessage';
 import useMarvelSerice from '../../services/MarvelSerice';
+import setContent from '../../utils/setContent';
 
 import './randomChar.scss';
 import mjolnir from '../../resources/img/mjolnir.png';
@@ -11,7 +10,7 @@ import mjolnir from '../../resources/img/mjolnir.png';
 
 const RandomChar = (props) => {
     const [char, setChar] = useState({});
-    const {loading, error, getCharacter, clearError} = useMarvelSerice();
+    const {getCharacter, clearError, process, setProcess} = useMarvelSerice();
 
     useEffect(() => {
         updateChar();
@@ -31,17 +30,12 @@ const RandomChar = (props) => {
         const id = Math.floor(Math.random() * (1011400 - 1011000) + 1011000);
         getCharacter(id)
             .then(onCharLoaded)
+            .then(() => setProcess('confirmed'))
     }
-
-    const errorMessage = error ? <ErrorMessage/> : null;
-    const spinner = loading ? <Spinner/> : null;
-    const content = !(loading || error) ? <View onCharSelected= {props.onCharSelected} char={char}/> : null;
 
     return (
         <div className="randomchar">
-            {errorMessage}
-            {spinner}
-            {content}
+            {setContent(process, View, char)}
             <div className="randomchar__static">
                 <p className="randomchar__title">
                     Random character for today!<br/>
@@ -59,8 +53,8 @@ const RandomChar = (props) => {
     )
 }
 
-const View = ({char, onCharSelected}) => {
-    const {thumbnail, name, description, homepage, wiki, id} = char;
+const View = ({data, onCharSelected}) => {
+    const {thumbnail, name, description, homepage, wiki, id} = data;
     let imgStyle = {'objectFit' : 'cover'};
     if (thumbnail === "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg" || 
         thumbnail ===  'http://i.annihil.us/u/prod/marvel/i/mg/f/60/4c002e0305708.gif') {

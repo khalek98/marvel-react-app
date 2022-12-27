@@ -1,7 +1,7 @@
 import {useHttp} from '../hooks/http.hook';
 
 const useMarvelSerice = () => {
-    const {loading, request, error, clearError} = useHttp();
+    const {request, clearError, process, setProcess} = useHttp();
     
     const _apiBase = 'https://gateway.marvel.com:443/v1/public/';
     const _apiKey = 'apikey=d9c743675863ced839ca78419759170d';
@@ -32,8 +32,6 @@ const useMarvelSerice = () => {
         return _transformComics(res.data.results[0])
     }
 
-
-
     const _transformComics = (comic) => {
         return {
             id: comic.id,
@@ -62,7 +60,14 @@ const useMarvelSerice = () => {
     }
 
     return {
-        loading, error, getAllCharacters, getCharacter, clearError, getAllComics, getComic, getCharacterByName
+        process,
+        setProcess,
+        getAllCharacters, 
+        getCharacter, 
+        clearError, 
+        getAllComics, 
+        getComic, 
+        getCharacterByName
     }
 }
 

@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-import ErrorMessage from '../errorMessage/ErrorMessage';
-import Spinner from '../spinner/Spinner';
 import useMarvelSerice from '../../services/MarvelSerice';
+import setContentList from '../../utils/setContentList';
 
 import './comicsList.scss';
 
@@ -13,7 +12,7 @@ const ComicsList = () => {
     const [offset, setOffset] = useState(0);
     const [comicsEnded, setComicsEnded] = useState(false);
 
-    const {loading, error, getAllComics} = useMarvelSerice();
+    const {getAllComics, process, setProcess} = useMarvelSerice();
 
     useEffect(() => {
         onRequest(offset, true);
@@ -23,6 +22,7 @@ const ComicsList = () => {
         setNewComicsLoading(!initial)
         getAllComics(offset)
             .then(onComicsListLoaded)
+            .then(() => setProcess('confirmed'))
     }
 
     const onComicsListLoaded = (newComicsList) => {
@@ -57,15 +57,9 @@ const ComicsList = () => {
         )
     }
 
-    const errorMessage = error ? <ErrorMessage/> : null;
-    const spinner = loading && !newComicsLoading ? <Spinner/> : null;
-    const items = renderItems(comicsList)
-
     return (
         <div className="comics__list">
-            {errorMessage}
-            {spinner}
-            {items}
+            {setContentList(process, () => renderItems(comicsList), newComicsLoading)}
             <button 
                 onClick={() => onRequest(offset)}
                 disabled={newComicsLoading}
