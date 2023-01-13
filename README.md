@@ -1,7 +1,13 @@
-# marvel-react-app
+# MARVEL APP - [LINK TO DEPLOYED APP](https://marvel-react-app-seven.vercel.app/)
 
-[**Link to deployed app**](https://marvel-react-app-seven.vercel.app/) <br/>
 
----
-
-The application is built on "GET" requests of the Marvel API, on functional components, using REACT hooks, creating and using custom hooks, using Formik, React ROUTER v6, lazy loading etc.
+The application is built on:
+- "GET" requests of the Marvel API
+- Functional components 
+- Custom hooks
+- REACT hooks
+- React Helmet
+- React Tranzition Group
+- React ROUTER v6
+- Formik
+- Lazy loading 
